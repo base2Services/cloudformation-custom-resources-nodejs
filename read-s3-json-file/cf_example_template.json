@@ -1,0 +1,77 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Use CR to read data from JSON S3 - example",
+  "Parameters": {
+    "ConfigurationS3Bucket": {
+      "Type": "String"
+    },
+    "ConfigurationS3Key": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "StackConfiguration": {
+      "Type": "Custom::Base2ServicesS3ConfigurationObject",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:lambda:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":function:CFCR_Read_S3_Object"
+            ]
+          ]
+        },
+        "Bucket": {
+          "Ref": "ConfigurationS3Bucket"
+        },
+        "Key": {
+          "Ref": "ConfigurationS3Key"
+        },
+        "EnsureKeys": {
+          "Fn::Join":[
+            ",",
+            ["DummyKey1","DummyKey2"]
+          ]
+        },
+        "EmptyKeyDefaultValue":"false"
+      }
+    },
+    "BucketWithNameFromS3": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::GetAtt": [
+            "StackConfiguration",
+            "NameOfTheBucketToBeCreated"
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "DummyOutput1":{
+      "Value": {
+        "Fn::GetAtt":[
+          "StackConfiguration",
+          "DummyKey1"
+        ]
+      }
+    },
+    "DummyOutput2":{
+      "Value": {
+        "Fn::GetAtt":[
+          "StackConfiguration",
+          "DummyKey2"
+        ]
+      }
+    }
+  }
+}

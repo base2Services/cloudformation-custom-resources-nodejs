@@ -1,0 +1,50 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "AWS CloudFormation AMI Look Up Sample Template: Demonstrates how to dynamically specify an AMI ID. This template provisions an EC2 instance with an AMI ID that is based on the instance's type and region. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template.",
+
+  "Parameters": {
+
+    "AMIName" : {
+      "Description" : "AMI Name to lookup",
+      "Type" : "String",
+      "Default" : "nat"
+    },
+
+    "LookupAMIFunctionRegin": {
+      "Description" : "The region the lambda function is deployed to",
+      "Type" : "String",
+      "Default" : "us-east-1"
+    }
+
+  },
+
+  "Resources" : {
+
+    "LookupAMISNSTopic" : {
+      "Type" : "AWS::SNS::Topic",
+      "Properties" : {
+        "Subscription" : [
+          { "Endpoint" : { "Fn::Join" : [ ":", [ "arn:aws:lambda", {"Ref" : "LookupAMIFunctionRegin"}, {"Ref": "AWS::AccountId"}, "function:lookup-ami" ] ]}, "Protocol" : "lambda" }
+        ],
+        "TopicName" : "lookup-ami-topic"
+      }
+    },
+
+    "AMIInfo": {
+      "Type": "Custom::AMIInfo",
+      "Properties": {
+        "ServiceToken": { "Fn::Join" : [ ":", [ "arn:aws:sns", {"Ref" : "AWS::Region"}, {"Ref": "AWS::AccountId"}, "lookup-ami-topic" ] ]},
+        "Region": { "Ref": "AWS::Region" },
+        "AMIName":  { "Ref" : "AMIName" }
+      }
+    }
+
+  },
+
+  "Outputs" : {
+    "AMIID" : {
+      "Description": "The Amazon EC2 instance AMI ID.",
+      "Value" : { "Fn::GetAtt": [ "AMIInfo", "Id" ] }
+    }
+  }
+}

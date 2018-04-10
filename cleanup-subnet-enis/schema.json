@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [
+        "SubnetIds"
+    ],
+    "properties": {
+        "SubnetIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

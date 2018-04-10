@@ -1,0 +1,8 @@
+{
+  "RequestType": "Delete",
+  "ResourceProperties": {
+    "Region":"ap-southeast-2",
+    "AMIName":"nat"
+  },
+  "ResponseURL":"http://s3.amazonws.com"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "cloudformation-custom-resouces",
+  "version": "0.0.1",
+  "description": "base2 custom cloudformation resources",
+  "private": "true",
+  "main": "index.js",
+  "devDependencies": {
+      "grunt": "0.4.*",
+      "grunt-aws-lambda": "0.10.0",
+      "aws-sdk": "2.1.*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/base2Services/cloudformation-custom-resouces.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/base2Services/cloudformation-custom-resouces/issues"
+  },
+  "homepage": "https://github.com/base2Services/cloudformation-custom-resouces"
+}

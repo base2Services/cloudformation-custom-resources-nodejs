@@ -1,0 +1,76 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "AWS CloudFormation NS records lookup sample template",
+
+  "Parameters": {
+    "parentDomain" : {
+      "Description" : "domain to search for ns records within Eg) bar.com",
+      "Type" : "String"
+    },
+    "subDomain" : {
+      "Description" : "sub domain to create Eg) foo",
+      "Type" : "String"
+    },
+    "lambdaFunctionRegion": {
+      "Description" : "The region the lambda function is deployed to",
+      "Type" : "String",
+      "Default" : "us-west-2"
+    }
+  },
+  "Resources" : {
+    "HostedZone" : {
+      "Type" : "AWS::Route53::HostedZone",
+      "Properties" : {
+        "Name" : { "Fn::Join" : [ "", [ {"Ref" : "subDomain"}, ".", {"Ref" : "parentDomain"}]]}
+      }
+    },
+    "LookupNsRecordsSNSTopic" : {
+      "Type" : "AWS::SNS::Topic",
+      "Properties" : {
+        "Subscription" : [
+          { "Endpoint" : { "Fn::Join" : [ ":", [ "arn:aws:lambda", { "Ref": "lambdaFunctionRegion" }, {"Ref": "AWS::AccountId"}, "function:lookup-ns-records" ] ]}, "Protocol" : "lambda" }
+        ],
+        "TopicName" : "lookup-ns-records"
+      }
+    },
+    "LookupNsRecords": {
+      "DependsOn" : "LookupNsRecordsSNSTopic",
+      "Type": "Custom::LookupNsRecords",
+      "Properties": {
+        "ServiceToken": { "Fn::Join" : [ ":", [ "arn:aws:sns", {"Ref" : "AWS::Region"}, {"Ref": "AWS::AccountId"}, "lookup-ns-records" ] ]},
+        "Region": { "Ref": "AWS::Region" },
+        "domain": { "Fn::Join" : [ "", [ {"Ref" : "subDomain"}, ".", {"Ref" : "parentDomain"}]]}
+      }
+    },
+    "CreateNS":{
+      "Type":"AWS::Route53::RecordSet",
+      "DependsOn":"LookupNsRecords",
+      "Properties":{
+        "HostedZoneName": { "Fn::Join" : [ "", [ {"Ref" : "parentDomain"}, "."]]},
+        "Comment":"DNS name for my instance.",
+        "Name": { "Fn::Join" : [ "", [ {"Ref" : "subDomain"}, ".", {"Ref" : "parentDomain"}]]},
+        "Type":"NS",
+        "TTL":"300",
+        "ResourceRecords":[ { "Fn::GetAtt": [ "LookupNsRecords", "ns1" ] },{ "Fn::GetAtt": [ "LookupNsRecords", "ns2" ] },{ "Fn::GetAtt": [ "LookupNsRecords", "ns3" ] },{ "Fn::GetAtt": [ "LookupNsRecords", "ns4" ] } ]
+      }
+    }
+  },
+  "Outputs" : {
+    "ns1" : {
+      "Description" : "NS records",
+      "Value" : { "Fn::GetAtt": [ "LookupNsRecords", "ns1" ] }
+    },
+    "ns2" : {
+      "Description" : "NS records",
+      "Value" : { "Fn::GetAtt": [ "LookupNsRecords", "ns2" ] }
+    },
+    "ns3" : {
+      "Description" : "NS records",
+      "Value" : { "Fn::GetAtt": [ "LookupNsRecords", "ns3" ] }
+    },
+    "ns4" : {
+      "Description" : "NS records",
+      "Value" : { "Fn::GetAtt": [ "LookupNsRecords", "ns4" ] }
+    }
+  }
+}
