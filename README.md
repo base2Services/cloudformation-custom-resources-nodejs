@@ -16,7 +16,7 @@ permissions to remove bucket keys, commonly set through Bucket policies.
 Cleanup logic is implemented in 'DELETE' action. 'CREATE' and 'UPDATE'
 actions are just dummy stubs.
 
-handler: `src/cleanup-s3-bucket/index.handler`
+handler: `cleanup-s3-bucket/index.handler`
 
 Required parameters:
 - `BucketName` - String. Name of the bucket that should have it's keys cleaned up
@@ -30,7 +30,7 @@ Detaches (if requiered) and deletes all ENIs within specified subnets.
 Cleanup logic is implemented in 'DELETE' action. 'CREATE' and 'UPDATE'
 actions are just dummy stubs.
 
-handler: `src/cleanup-subnet-enis/index.hanlder`
+handler: `cleanup-subnet-enis/index.hanlder`
 
 Required parameters:
 - `SubnetIds` - Array of Strings. Self explanitory - all subnets within this area
@@ -43,7 +43,7 @@ Creates, Updates and Cleans up Rotue53 DNS records in specified zone. All
 operations are done using assumed role that is passed down as Custom Resource
 parameters
 
-handler: `src/route53-changeset/index.handler`
+handler: `route53-changeset/index.handler`
 
 Required parameters:
 - `role` - ARN of role that should be assumed by Custom Resource. It's assumed
@@ -65,7 +65,7 @@ for all 3 operations - CREATE, UPDATE and DELETE.
 Reads values from JSON file placed in S3 bucket, allowing this values to be referenced in other resources.
 Example of creating s3 bucket with name specified within JSON file can be found in `src/read-s3-json-file/cf_template_example.json`
 
-handler: `src/read-s3-json-file/index.handler`
+handler: `read-s3-json-file/index.handler`
 
 Required parameters:
 - `Bucket` - name of bucket where configuration file resides
