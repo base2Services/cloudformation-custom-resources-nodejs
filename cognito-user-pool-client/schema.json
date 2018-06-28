@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "ClientName", "UserPoolId"
+  ],
+  "properties": {
+    "UserPoolId":{
+      "type": "string"
+    },
+    "ClientName": {
+      "type": "string"
+    },
+    "ExplicitAuthFlows": {
+      "type": "array"
+    },
+    "GenerateSecret": {
+      "type": "string"
+    },
+    "ReadAttributes": {
+      "type": "array"
+    },
+    "RefreshTokenValidity": {
+      "type": "number"
+    },
+    "WriteAttributes": {
+      "type": "array"
+    },
+    "CallbackURLs": {
+      "type": "array"
+    },
+    "ClientName": {
+      "type": "string"
+    },
+    "DefaultRedirectURI": {
+      "type": "string"
+    },
+    "LogoutURLs": {
+      "type": "array"
+    },
+    "SupportedIdentityProviders": {
+      "type": "array"
+    },
+    "AllowedOAuthScopes": {
+      "type": "array"
+    },
+    "AllowedOAuthFlows": {
+      "type":"array"
+    },
+    "AllowedOAuthFlowsUserPoolClient":{
+      "type":"string"
+    }
+  }
+}
