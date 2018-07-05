@@ -4,10 +4,10 @@
   "description": "base2 custom cloudformation resources",
   "private": "true",
   "devDependencies": {
-    "aws-sdk": "2.10.*"
+    "aws-sdk": "2.*"
   },
   "dependencies": {
-    "cfn-lambda": "0.8.3"
+    "cfn-lambda": "toshke/cfn-lambda#development"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
