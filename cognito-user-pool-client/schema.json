@@ -49,6 +49,9 @@
     },
     "AllowedOAuthFlowsUserPoolClient":{
       "type":"string"
+    },
+    "SkipUpdate":{
+      "type":"boolean"
     }
   }
 }
