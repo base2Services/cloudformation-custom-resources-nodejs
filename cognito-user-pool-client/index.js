@@ -20,18 +20,20 @@ let logic = {
     returnAttrs: [
       'UserPoolClient.ClientId',
       'UserPoolClient.CreationDate',
-      'UserPoolClient.LastModifiedDate'
+      'UserPoolClient.LastModifiedDate',
+      'UserPoolClient.ClientSecret'
     ],
     returnPhysicalId: 'UserPoolClient.ClientId'
   }),
 
-  Update: CfnLambda.SDKAlias({
+  DoUpdate: CfnLambda.SDKAlias({
     api: CognitoApi,
     method: 'updateUserPoolClient',
-    returnKeys: [
+    returnAttrs: [
       'UserPoolClient.ClientId',
       'UserPoolClient.CreationDate',
-      'UserPoolClient.LastModifiedDate'
+      'UserPoolClient.LastModifiedDate',
+      'UserPoolClient.ClientSecret'
     ],
     physicalIdAs: 'ClientId',
     keys: [
@@ -61,12 +63,37 @@ let logic = {
     keys: ['UserPoolId','ClientId'],
     physicalIdAs: 'ClientId'
   })
-}
+};
+
+logic.NoUpdate = CfnLambda.SDKAlias({
+  api: CognitoApi,
+  method: 'describeUserPoolClient',
+  returnAttrs: [
+    'UserPoolClient.ClientId',
+    'UserPoolClient.CreationDate',
+    'UserPoolClient.LastModifiedDate',
+    'UserPoolClient.ClientSecret'
+  ],
+  physicalIdAs: 'ClientId',
+  keys: [
+    'UserPoolId',
+    'ClientId'
+  ]
+}),
+
+logic.Update = function(physicalId, params, oldParams, callback) {
+    if(params.SkipUpdate) {
+      return logic.NoUpdate(physicalId, params, callback);
+    } else {
+      return logic.DoUpdate(physicalId, params, oldParams, callback);
+    }
+};
 
 exports.handler = CfnLambda({
   Create: logic.Create,
   Update: logic.Update,
   Delete: logic.Delete,
+  NoUpdate: logic.NoUpdate,
   TriggersReplacement: ['UserPoolId'],
   SchemaPath: [__dirname, 'schema.json']
 });
