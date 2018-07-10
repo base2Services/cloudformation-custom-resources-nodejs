@@ -21,7 +21,7 @@
       "type": "array"
     },
     "RefreshTokenValidity": {
-      "type": "number"
+      "type": "string"
     },
     "WriteAttributes": {
       "type": "array"
