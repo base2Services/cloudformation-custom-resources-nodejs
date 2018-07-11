@@ -17,6 +17,22 @@ let logic = {
             'GenerateSecret',
             'AllowedOAuthFlowsUserPoolClient'
         ],
+        keys: [
+            'ClientName',
+            'ExplicitAuthFlows',
+            'GenerateSecret',
+            'UserPoolId',
+            'AllowedOAuthFlows',
+            'AllowedOAuthFlowsUserPoolClient',
+            'AllowedOAuthScopes',
+            'CallbackURLs',
+            'DefaultRedirectURI',
+            'LogoutURLs',
+            'ReadAttributes',
+            'RefreshTokenValidity',
+            'SupportedIdentityProviders',
+            'WriteAttributes'
+        ],
         returnAttrs: [
             'UserPoolClient.ClientId',
             'UserPoolClient.CreationDate',

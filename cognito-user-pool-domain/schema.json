@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "UserPoolId",
+    "Domain"
+  ],
+  "properties": {
+    "UserPoolId": {
+      "type": "string"
+    },
+    "GenerateRandomIfNotAvailable": {
+      "type": "string"
+    },
+    "Domain": {
+      "type": "string"
+    }
+  }
+}
