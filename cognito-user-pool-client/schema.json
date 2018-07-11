@@ -51,7 +51,7 @@
       "type":"string"
     },
     "SkipUpdate":{
-      "type":"boolean"
+      "type":"string"
     }
   }
 }
