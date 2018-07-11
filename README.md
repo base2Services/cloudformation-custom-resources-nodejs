@@ -77,3 +77,31 @@ Optional parameters:
    will default to empty string, or value of `EmptyKeyDefaultValue` parameter
 
 - `EmptyKeyDefaultValue` value for keys not present in JSON file and requested by `EnsureKeys`
+
+## Cognito UserPoolDomain
+
+Creates UserPoolDomain for cognito user pool. This is currently not
+covered by CloudFormation.
+
+runtime: `nodejs6.10`
+handler: `cognito-user-pool-domain/index.handler`
+
+Required parameters:
+
+Please look at `cognito-user-pool-domain/schema.json`
+
+Optional parameter `GenerateRandomIfNotAvailable` will try to append random 
+string to requested domain name, if given name is not available. This process
+is repeated 5 times until handler reports an error.
+
+## Cognito UserPoolClient
+
+Creates user pool client, as there is no cloudformation resource supporting
+all of the properties. 
+
+runtime: `nodejs6.10`
+handler: `cognito-user-pool-client/index.handler`
+
+Required parameters:
+
+Please look at `cognito-user-pool-client/schema.json`
