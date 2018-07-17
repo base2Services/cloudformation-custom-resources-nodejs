@@ -7,6 +7,21 @@ as AWS team fills in the gaps. There is also some more complex ones, or develope
 to suite specific needs, such as reading JSON file from an S3 object, and making
 JSON values available through `Fn::GetAtt` intrinsic function.
 
+## How to use
+
+Simply clone the repository, install npm dependencies, and zip up the folder as lambda deployment package
+
+```
+git clone https://github.com/base2Services/cloudformation-custom-resources-nodejs.git && \
+cd cloudformation-custom-resources-nodejs && \
+npm install && \
+zip -r ~/cfn-ccr-nodejs6.10.zip .
+```
+
+## Dependencies
+
+All dependencies are defined within `package.json`. 
+
 ## Custom resources
 
 ### S3 Bucket cleanup
