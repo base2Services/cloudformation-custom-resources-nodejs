@@ -5,7 +5,10 @@ of months of continuous efforts to automate infrastructure management trough
 AWS CloudFormation. You may find some of these CloudFormation resources obsolete,
 as AWS team fills in the gaps. There is also some more complex ones, or developed
 to suite specific needs, such as reading JSON file from an S3 object, and making
-JSON values available through `Fn::GetAtt` intrinsic function.
+JSON values available through `Fn::GetAtt` intrinsic function. All of custom resources 
+within this repository are meant to be deployed as AWS Lambdas for `nodejs6.10` runtime
+
+[Collection of custom resources for Python can be found here](https://github.com/base2Services/cloudformation-custom-resources-python)
 
 ## How to use
 
