@@ -30,7 +30,10 @@ const Logic = {
                     if (params.EnsureKeys) {
                         params.EnsureKeys.split(',').forEach((k) => {
                             if (configurationObject[k] === undefined) {
-                                let defaultValue = params.EmptyKeyDefaultValue ? params.EmptyKeyDefaultValue : '';
+                                let defaultValue = params.EmptyKeyDefaultValue ? params.EmptyKeyDefaultValue : ''
+                                if (params[`${k}DefaultValue`] !== undefined) {
+                                    defaultValue = params[`${k}DefaultValue`]
+                                }
                                 configurationObject[k] = defaultValue;
                             }
                         });
