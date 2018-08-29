@@ -38,6 +38,17 @@ const Logic = {
                             }
                         });
                     }
+                    for (key in configurationObject) {
+                        if (configurationObject[key] !== undefined) {
+                            if (typeof configurationObject[key] == 'string') {
+                                if (configurationObject[key].trim() == '') {
+                                    if (params[`${key}DefaultValue`] !== undefined) {
+                                        configurationObject[key] = params[`${key}DefaultValue`]
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     console.log(`Passing following configuration back to stack:\n${JSON.stringify(configurationObject, null, 2)}`);
 
