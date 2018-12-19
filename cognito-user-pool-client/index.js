@@ -9,6 +9,15 @@ let AWS = require('aws-sdk'),
         apiVersion: '2016-04-18'
     });
 
+function returnedData(data) {
+    return {
+        'ClientId': data.UserPoolClient.ClientId,
+        'CreationDate': data.UserPoolClient.CreationDate,
+        'LastModifiedDate': data.UserPoolClient.LastModifiedDate,
+        'ClientSecret': data.UserPoolClient.ClientSecret
+    }
+}
+
 let logic = {
     Create: CfnLambda.SDKAlias({
         api: CognitoApi,
@@ -33,24 +42,14 @@ let logic = {
             'SupportedIdentityProviders',
             'WriteAttributes'
         ],
-        returnAttrs: [
-            'UserPoolClient.ClientId',
-            'UserPoolClient.CreationDate',
-            'UserPoolClient.LastModifiedDate',
-            'UserPoolClient.ClientSecret'
-        ],
+        returnAttrs: returnedData,
         returnPhysicalId: 'UserPoolClient.ClientId'
     }),
 
     DoUpdate: CfnLambda.SDKAlias({
         api: CognitoApi,
         method: 'updateUserPoolClient',
-        returnAttrs: [
-            'UserPoolClient.ClientId',
-            'UserPoolClient.CreationDate',
-            'UserPoolClient.LastModifiedDate',
-            'UserPoolClient.ClientSecret'
-        ],
+        returnAttrs: returnedData,
         physicalIdAs: 'ClientId',
         keys: [
             'UserPoolId',
@@ -84,12 +83,7 @@ let logic = {
 logic.NoUpdate = CfnLambda.SDKAlias({
     api: CognitoApi,
     method: 'describeUserPoolClient',
-    returnAttrs: [
-        'UserPoolClient.ClientId',
-        'UserPoolClient.CreationDate',
-        'UserPoolClient.LastModifiedDate',
-        'UserPoolClient.ClientSecret'
-    ],
+    returnAttrs: returnedData,
     physicalIdAs: 'ClientId',
     keys: [
         'UserPoolId',
