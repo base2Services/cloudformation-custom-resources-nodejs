@@ -43,7 +43,9 @@ let logic = {
             'WriteAttributes'
         ],
         returnAttrs: returnedData,
-        returnPhysicalId: 'UserPoolClient.ClientId'
+        returnPhysicalId: function(data) {
+            return data.UserPoolClient.ClientId
+        }
     }),
 
     DoUpdate: CfnLambda.SDKAlias({
